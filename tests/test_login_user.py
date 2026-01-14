@@ -8,6 +8,8 @@ class TestLoginUser:
     @allure.title('Логин под существующим пользователем')
     def test_login_existing_user(self, create_user):
         create_user_data, response_data, status_code = create_user
+
+        allure.step('Отправка POST-запроса логина под существующим пользователем')
         response = requests.post(Urls.USER_LOGIN, json=create_user_data)
         response_data = response.json()
 
@@ -26,6 +28,8 @@ class TestLoginUser:
             "email": "faild@example.com",
             "password": create_user_data["password"]
         }
+
+        allure.step('Отправка POST-запроса логина с неверным логином')
         response = requests.post(Urls.USER_LOGIN, json=login_data_faild)
         response_data = response.json()
 
@@ -41,6 +45,8 @@ class TestLoginUser:
             "email": create_user_data["email"],
             "password": "faild"
         }
+
+        allure.step('Отправка POST-запроса логина с неверным паролем')
         response = requests.post(Urls.USER_LOGIN, json=login_data_faild)
         response_data = response.json()
 
